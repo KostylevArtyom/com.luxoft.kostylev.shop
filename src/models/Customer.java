@@ -22,4 +22,20 @@ public class Customer {
 //    public void modifyName(String name) {
 //        this.name = name;
 //    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null)
+            return false;
+        if (getClass() != object.getClass())
+            return false;
+        if (this.getId() == ((Customer)object).getId())
+            return true;
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }
