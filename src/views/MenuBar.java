@@ -3,6 +3,7 @@ package views;
 import database.Database;
 import database.TextFileCommaSeparatedDatabase;
 import main.Main;
+import models.Customer;
 import models.Shop;
 import views.utils.LabelValues;
 
@@ -14,6 +15,14 @@ public class MenuBar extends JMenuBar {
         JMenu addMenu = new JMenu(LabelValues.ADD_MENU_NAME);
 
         JMenuItem addCustomerMenu = new JMenuItem(LabelValues.ADD_CUSTOMER_MENU_NAME);
+        addCustomerMenu.addActionListener(e -> {
+            String name = JOptionPane.showInputDialog(new JFrame(), "Type customer name", "");
+            if ((name != null) && (name.length() > 0)) {
+                Customer newCustomer = new Customer(name);
+                Main.shop.addCustomer(newCustomer);
+                Main.mainWindow.addCustomer(newCustomer.toStringArray());
+            }
+        });
         addMenu.add(addCustomerMenu);
 
         JMenuItem addGoodMenu = new JMenuItem(LabelValues.ADD_GOOD_MENU_NAME);
