@@ -21,6 +21,23 @@ public class Customer {
         this.name = name;
     }
 
+    private class StorablePositions {
+        static final int ID = 0;
+        static final int NAME = 1;
+    }
+
+    @Override
+    public String toString() {
+        List<String> store = new ArrayList<>();
+        store.add(StorablePositions.ID, getId().toString());
+        store.add(StorablePositions.NAME, getName());
+        return String.join(Constants.STORE_SEPARATOR, store).concat("\n");
+    }
+
+    public Customer(String[] dataArray) {
+        this(dataArray[StorablePositions.NAME], Integer.valueOf(dataArray[StorablePositions.ID]));
+    }
+
     public Integer getId() {
         return id;
     }

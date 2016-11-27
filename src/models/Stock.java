@@ -20,6 +20,31 @@ public class Stock {
         this.price = price;
     }
 
+    private class StorablePositions {
+        static final int GOOD_ID = 0;
+        static final int GOOD_DESCRIPTION = 1;
+        static final int AMOUNT = 2;
+        static final int PRICE = 3;
+    }
+
+    public Stock(String[] dataArray) {
+        this(new Good(
+                        dataArray[StorablePositions.GOOD_DESCRIPTION],
+                        Integer.valueOf(dataArray[StorablePositions.GOOD_ID])
+                ),  Integer.valueOf(dataArray[StorablePositions.AMOUNT]),
+                Double.valueOf(dataArray[StorablePositions.PRICE]));
+    }
+
+    @Override
+    public String toString() {
+        List<String> store = new ArrayList<>();
+        store.add(StorablePositions.GOOD_ID, getGood().getId().toString());
+        store.add(StorablePositions.GOOD_DESCRIPTION, getGood().getDescription());
+        store.add(StorablePositions.AMOUNT, getAmount().toString());
+        store.add(StorablePositions.PRICE, getPrice().toString());
+        return String.join(Constants.STORE_SEPARATOR, store).concat("\n");
+    }
+
     public Good getGood() {
         return good;
     }

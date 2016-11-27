@@ -3,8 +3,10 @@ package models;
 import exceptions.CustomerNotExistException;
 import exceptions.GoodNotExistException;
 import exceptions.NotEnoughAmountException;
+import exceptions.DataParseException;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,6 +19,40 @@ public class Shop {
         customers = new HashSet<>();
         stocks = new HashSet<>();
         trades = new HashSet<>();
+    }
+
+    public Shop(List<String> data) throws DataParseException {
+        this();
+        for (String dataRow : data) {
+            String[] dataRowArray = dataRow.split(Constants.STORE_SEPARATOR);
+            if (dataRowArray[0] == Customer.class.getName()) {
+                customers.add(new Customer(dataRowArray));
+            } else if (dataRowArray[0] == Stock.class.getName()) {
+                stocks.add(new Stock(dataRowArray));
+            } else if (dataRowArray[0] == Trade.class.getName()) {
+                trades.add(new Trade(dataRowArray,
+                        getCustomerById(Integer.valueOf(dataRowArray[0])),
+                        getGoodById(Integer.valueOf(dataRowArray[1]))));
+            } else
+                throw new DataParseException();
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Customer customer: customers) stringBuilder.append(customer.toString());
+        for (Stock stock: stocks) stringBuilder.append(stock.toString());
+        for (Trade trade: trades) stringBuilder.append(trade.toString());
+        return stringBuilder.toString();
+    }
+
+    public Customer getCustomerById(Integer id) {
+        return customers.stream().filter(s -> s.getId() == id).findAny().get();
+    }
+
+    public Good getGoodById(Integer id) {
+        return stocks.stream().map(s -> s.getGood()).filter(s -> s.getId() == id).findAny().get();
     }
 
     public Set<Customer> getCustomers() {
@@ -45,7 +81,7 @@ public class Shop {
         stocks.remove(stock);
     }
 
-    public Set<Stock> getGoods() {
+    public Set<Good> getGoods() {
         return stocks.stream().map(s -> s.getGood()).collect(Collectors.toSet());
     }
 

@@ -11,7 +11,7 @@ public class Good {
         this.description = description;
     }
 
-    private Good(String description, Integer id) {
+    Good(String description, Integer id) {
         if (id_counter <= id)
             id_counter = id + 1;
         this.id = id;
