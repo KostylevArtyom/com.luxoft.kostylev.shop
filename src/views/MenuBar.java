@@ -4,41 +4,42 @@ import database.Database;
 import database.TextFileCommaSeparatedDatabase;
 import main.Main;
 import models.Shop;
+import views.utils.LabelValues;
 
 import javax.swing.*;
 import java.nio.file.Path;
 
 public class MenuBar extends JMenuBar {
     public MenuBar() {
-        JMenu addMenu = new JMenu("Add item");
+        JMenu addMenu = new JMenu(LabelValues.ADD_MENU_NAME);
 
-        JMenuItem addCustomerMenu = new JMenuItem("Add customer");
+        JMenuItem addCustomerMenu = new JMenuItem(LabelValues.ADD_CUSTOMER_MENU_NAME);
         addMenu.add(addCustomerMenu);
 
-        JMenuItem addGoodMenu = new JMenuItem("Add good");
+        JMenuItem addGoodMenu = new JMenuItem(LabelValues.ADD_GOOD_MENU_NAME);
         addMenu.add(addGoodMenu);
 
-        JMenuItem addTradeMenu = new JMenuItem("Add trade");
+        JMenuItem addTradeMenu = new JMenuItem(LabelValues.ADD_TRADE_MENU_NAME);
         addMenu.add(addTradeMenu);
 
         add(addMenu);
 
-        JMenu editMenu = new JMenu("Edit item");
+        JMenu editMenu = new JMenu(LabelValues.EDIT_MENU_NAME);
 
-        JMenuItem addGoodAmountMenu = new JMenuItem("Add good amount");
+        JMenuItem addGoodAmountMenu = new JMenuItem(LabelValues.ADD_GOOD_AMOUNT_MENU_NAME);
         editMenu.add(addGoodAmountMenu);
 
-        JMenuItem editGoodAmountMenu = new JMenuItem("Edit good amount");
+        JMenuItem editGoodAmountMenu = new JMenuItem(LabelValues.EDIT_GOOD_AMOUNT_MENU_NAME);
         editMenu.add(editGoodAmountMenu);
 
-        JMenuItem editGoodPriceMenu = new JMenuItem("Edit good price");
+        JMenuItem editGoodPriceMenu = new JMenuItem(LabelValues.EDIT_GOOD_PRICE_MENU_NAME);
         editMenu.add(editGoodPriceMenu);
 
         add(editMenu);
 
-        JMenu storageMenu = new JMenu("Storage");
+        JMenu storageMenu = new JMenu(LabelValues.STORAGE_MENU_NAME);
 
-        JMenuItem storageLoadMenu = new JMenuItem("Load from .txt storage");
+        JMenuItem storageLoadMenu = new JMenuItem(LabelValues.STORAGE_LOAD_MENU_NAME);
         storageLoadMenu.addActionListener(e -> {
             final JFileChooser jFileChooser = new JFileChooser();
             int result = jFileChooser.showOpenDialog(null);
@@ -55,7 +56,7 @@ public class MenuBar extends JMenuBar {
         });
         storageMenu.add(storageLoadMenu);
 
-        JMenuItem storageSaveMenu = new JMenuItem("Save to .txt storage");
+        JMenuItem storageSaveMenu = new JMenuItem(LabelValues.STORAGE_SAVE_MENU_NAME);
         storageSaveMenu.addActionListener(e -> {
             final JFileChooser jFileChooser = new JFileChooser();
             int result = jFileChooser.showSaveDialog(null);

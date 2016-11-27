@@ -1,4 +1,4 @@
-package exceptions;
+package exceptions.utils;
 
 public enum ExceptionValues {
     CUSTOMER_NOT_EXIST_EXCEPTION_VALUE("Customer doesn\'t exist!"),

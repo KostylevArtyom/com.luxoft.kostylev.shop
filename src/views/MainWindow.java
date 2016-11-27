@@ -3,6 +3,7 @@ package views;
 import models.Customer;
 import models.Stock;
 import models.Trade;
+import views.utils.LabelValues;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,11 +14,11 @@ public class MainWindow extends JFrame {
     private static NamedScrollTable tradesNamedScrollTable;
 
     public MainWindow() {
-        super("Shop");
+        super(LabelValues.FRAME_NAME);
 
-        customersNamedScrollTable = new NamedScrollTable("Customers", Customer.getAllClasses());
-        stocksNamedScrollTable = new NamedScrollTable("Stocks", Stock.getAllClasses());
-        tradesNamedScrollTable = new NamedScrollTable("Trades", Trade.getAllClasses());
+        customersNamedScrollTable = new NamedScrollTable(LabelValues.CUSTOMERS_TABLE_NAME, Customer.getAllClasses());
+        stocksNamedScrollTable = new NamedScrollTable(LabelValues.STOCKS_TABLE_NAME, Stock.getAllClasses());
+        tradesNamedScrollTable = new NamedScrollTable(LabelValues.TRADES_TABLE_NAME, Trade.getAllClasses());
     }
 
     public void launchFrame() {
