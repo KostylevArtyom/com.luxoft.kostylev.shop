@@ -1,5 +1,8 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Stock {
     private Good good;
     private Integer amount;
@@ -57,5 +60,32 @@ public class Stock {
     @Override
     public int hashCode() {
         return super.hashCode();
+    }
+
+    private class Positions {
+        static final int CLASS = 0;
+        static final int GOOD_ID = 1;
+        static final int AMOUNT = 2;
+        static final int PRICE = 3;
+    }
+
+    private class StowablePositions {
+        static final int GOOD_DESCRIPTION = 0;
+        static final int AMOUNT = 1;
+        static final int PRICE = 2;
+    }
+
+    private class StowableNames {
+        static final String GOOD_DESCRIPTION = "Good";
+        static final String AMOUNT = "Amount";
+        static final String PRICE = "Price";
+    }
+
+    public static String[] getAllClasses() {
+        List<String> store = new ArrayList<>();
+        store.add(StowablePositions.GOOD_DESCRIPTION, StowableNames.GOOD_DESCRIPTION);
+        store.add(StowablePositions.AMOUNT, StowableNames.AMOUNT);
+        store.add(StowablePositions.PRICE, StowableNames.PRICE);
+        return store.toArray(new String[store.size()]);
     }
 }

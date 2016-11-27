@@ -1,5 +1,8 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Customer {
     private static Integer id_counter = 0;
 
@@ -8,6 +11,13 @@ public class Customer {
 
     public Customer(String name) {
         this.id = ++id_counter;
+        this.name = name;
+    }
+
+    private Customer(String name, Integer id) {
+        if (id_counter <= id)
+            id_counter = id + 1;
+        this.id = id;
         this.name = name;
     }
 
@@ -37,5 +47,19 @@ public class Customer {
     @Override
     public int hashCode() {
         return id;
+    }
+
+    private class StowablePositions {
+        static final int NAME = 0;
+    }
+
+    private class StowableNames {
+        static final String NAME = "Name";
+    }
+
+    public static String[] getAllClasses() {
+        List<String> store = new ArrayList<>();
+        store.add(StowablePositions.NAME, StowableNames.NAME);
+        return store.toArray(new String[store.size()]);
     }
 }
