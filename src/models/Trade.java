@@ -1,10 +1,13 @@
 package models;
 
+import models.utils.Arrayable;
+import models.utils.Constants;
+
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Trade {
+public class Trade implements Arrayable {
     Customer customer;
     Good good;
     Integer amount;
@@ -73,7 +76,7 @@ public class Trade {
         return time;
     }
 
-    private class StowablePositions {
+    private class ShowablePositions {
         static final int CUSTOMER_NAME = 0;
         static final int GOOD_DESCRIPTION = 1;
         static final int AMOUNT = 2;
@@ -81,7 +84,7 @@ public class Trade {
         static final int TIME = 4;
     }
 
-    private class StowableNames {
+    private class ShowableNames {
         static final String CUSTOMER_NAME = "Customer";
         static final String GOOD_DESCRIPTION = "Good";
         static final String AMOUNT = "Amount";
@@ -91,11 +94,22 @@ public class Trade {
 
     public static String[] getAllClasses() {
         List<String> store = new ArrayList<>();
-        store.add(StowablePositions.CUSTOMER_NAME, StowableNames.CUSTOMER_NAME);
-        store.add(StowablePositions.GOOD_DESCRIPTION, StowableNames.GOOD_DESCRIPTION);
-        store.add(StowablePositions.AMOUNT, StowableNames.AMOUNT);
-        store.add(StowablePositions.UNIT_COST, StowableNames.UNIT_COST);
-        store.add(StowablePositions.TIME, StowableNames.TIME);
+        store.add(ShowablePositions.CUSTOMER_NAME, ShowableNames.CUSTOMER_NAME);
+        store.add(ShowablePositions.GOOD_DESCRIPTION, ShowableNames.GOOD_DESCRIPTION);
+        store.add(ShowablePositions.AMOUNT, ShowableNames.AMOUNT);
+        store.add(ShowablePositions.UNIT_COST, ShowableNames.UNIT_COST);
+        store.add(ShowablePositions.TIME, ShowableNames.TIME);
+        return store.toArray(new String[store.size()]);
+    }
+
+    @Override
+    public String[] toStringArray() {
+        List<String> store = new ArrayList<>();
+        store.add(ShowablePositions.CUSTOMER_NAME, getCustomer().getName());
+        store.add(ShowablePositions.GOOD_DESCRIPTION, getGood().getDescription());
+        store.add(ShowablePositions.AMOUNT, getAmount().toString());
+        store.add(ShowablePositions.UNIT_COST,getUnitCost().toString());
+        store.add(ShowablePositions.TIME, getTime().toString());
         return store.toArray(new String[store.size()]);
     }
 }

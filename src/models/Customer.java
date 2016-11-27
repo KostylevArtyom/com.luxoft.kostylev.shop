@@ -1,9 +1,12 @@
 package models;
 
+import models.utils.Arrayable;
+import models.utils.Constants;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Customer {
+public class Customer implements Arrayable {
     private static Integer id_counter = 0;
 
     private Integer id;
@@ -67,17 +70,24 @@ public class Customer {
         return id;
     }
 
-    private class StowablePositions {
+    private class ShowablePositions {
         static final int NAME = 0;
     }
 
-    private class StowableNames {
+    private class ShowableNames {
         static final String NAME = "Name";
     }
 
     public static String[] getAllClasses() {
         List<String> store = new ArrayList<>();
-        store.add(StowablePositions.NAME, StowableNames.NAME);
+        store.add(ShowablePositions.NAME, ShowableNames.NAME);
+        return store.toArray(new String[store.size()]);
+    }
+
+    @Override
+    public String[] toStringArray() {
+        List<String> store = new ArrayList<>();
+        store.add(ShowablePositions.NAME, name);
         return store.toArray(new String[store.size()]);
     }
 }

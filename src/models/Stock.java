@@ -1,9 +1,12 @@
 package models;
 
+import models.utils.Arrayable;
+import models.utils.Constants;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Stock {
+public class Stock implements Arrayable {
     private Good good;
     private Integer amount;
     private Double price;
@@ -88,13 +91,13 @@ public class Stock {
         return super.hashCode();
     }
 
-    private class StowablePositions {
+    private class ShowablePositions {
         static final int GOOD_DESCRIPTION = 0;
         static final int AMOUNT = 1;
         static final int PRICE = 2;
     }
 
-    private class StowableNames {
+    private class ShowableNames {
         static final String GOOD_DESCRIPTION = "Good";
         static final String AMOUNT = "Amount";
         static final String PRICE = "Price";
@@ -102,9 +105,18 @@ public class Stock {
 
     public static String[] getAllClasses() {
         List<String> store = new ArrayList<>();
-        store.add(StowablePositions.GOOD_DESCRIPTION, StowableNames.GOOD_DESCRIPTION);
-        store.add(StowablePositions.AMOUNT, StowableNames.AMOUNT);
-        store.add(StowablePositions.PRICE, StowableNames.PRICE);
+        store.add(ShowablePositions.GOOD_DESCRIPTION, ShowableNames.GOOD_DESCRIPTION);
+        store.add(ShowablePositions.AMOUNT, ShowableNames.AMOUNT);
+        store.add(ShowablePositions.PRICE, ShowableNames.PRICE);
+        return store.toArray(new String[store.size()]);
+    }
+
+    @Override
+    public String[] toStringArray() {
+        List<String> store = new ArrayList<>();
+        store.add(ShowablePositions.GOOD_DESCRIPTION, getGood().getDescription());
+        store.add(ShowablePositions.AMOUNT, getAmount().toString());
+        store.add(ShowablePositions.PRICE, getPrice().toString());
         return store.toArray(new String[store.size()]);
     }
 }
