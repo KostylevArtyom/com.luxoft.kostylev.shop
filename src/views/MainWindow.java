@@ -10,12 +10,13 @@ import java.awt.*;
 public class MainWindow extends JFrame {
     public MainWindow() {
         super("Shop");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     public void launchFrame() {
-        setLayout(new GridLayout(1, 3));
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        setLayout(new GridLayout(1, 3));
+        setJMenuBar(new MenuBar());
         setSize(1000, 800);
 
         String customersMockData[][] = {{"Alphonse"}, {"Barney"}, {"Clare"}, {"Demetra"}, {"Emma"}};
