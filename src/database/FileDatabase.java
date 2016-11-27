@@ -1,6 +1,7 @@
 package database;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,9 +17,9 @@ public class FileDatabase implements Database {
     }
 
     @Override
-    public List<String> readStringList() {
-        try (BufferedReader br = Files.newBufferedReader(filePath)) {
-            return br.lines().collect(Collectors.toList());
+    public List<String> readRowList() {
+        try (BufferedReader bufferedReader = Files.newBufferedReader(filePath)) {
+            return bufferedReader.lines().collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -26,5 +27,14 @@ public class FileDatabase implements Database {
     }
 
     @Override
-    public void writeStringList(List<String> data) {}
+    public void writeObjectList(List data) {
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(filePath)) {
+            for (Object unit: data) {
+                bufferedWriter.write(unit.toString());
+                bufferedWriter.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

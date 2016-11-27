@@ -21,10 +21,10 @@ public class Stock {
     }
 
     private class StorablePositions {
-        static final int GOOD_ID = 0;
-        static final int GOOD_DESCRIPTION = 1;
-        static final int AMOUNT = 2;
-        static final int PRICE = 3;
+        static final int GOOD_ID = 1;
+        static final int GOOD_DESCRIPTION = 2;
+        static final int AMOUNT = 3;
+        static final int PRICE = 4;
     }
 
     public Stock(String[] dataArray) {
@@ -38,11 +38,12 @@ public class Stock {
     @Override
     public String toString() {
         List<String> store = new ArrayList<>();
+        store.add(getClass().getSimpleName());
         store.add(StorablePositions.GOOD_ID, getGood().getId().toString());
         store.add(StorablePositions.GOOD_DESCRIPTION, getGood().getDescription());
         store.add(StorablePositions.AMOUNT, getAmount().toString());
         store.add(StorablePositions.PRICE, getPrice().toString());
-        return String.join(Constants.STORE_SEPARATOR, store).concat("\n");
+        return String.join(Constants.STORE_SEPARATOR, store);
     }
 
     public Good getGood() {

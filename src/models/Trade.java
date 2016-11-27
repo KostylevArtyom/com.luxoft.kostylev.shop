@@ -28,11 +28,11 @@ public class Trade {
     }
 
     private class StorablePositions {
-        static final int CUSTOMER_ID = 0;
-        static final int GOOD_ID = 1;
-        static final int AMOUNT = 2;
-        static final int UNIT_COST = 3;
-        static final int TIME = 4;
+        static final int CUSTOMER_ID = 1;
+        static final int GOOD_ID = 2;
+        static final int AMOUNT = 3;
+        static final int UNIT_COST = 4;
+        static final int TIME = 5;
     }
 
     public Trade(String[] dataArray, Customer customer, Good good) {
@@ -44,12 +44,13 @@ public class Trade {
     @Override
     public String toString() {
         List<String> store = new ArrayList<>();
+        store.add(getClass().getSimpleName());
         store.add(StorablePositions.CUSTOMER_ID, getCustomer().getId().toString());
         store.add(StorablePositions.GOOD_ID, getGood().getId().toString());
         store.add(StorablePositions.AMOUNT, getAmount().toString());
         store.add(StorablePositions.UNIT_COST, getUnitCost().toString());
         store.add(StorablePositions.TIME, getTime().toString());
-        return String.join(Constants.STORE_SEPARATOR, store).concat("\n");
+        return String.join(Constants.STORE_SEPARATOR, store);
     }
 
     public Customer getCustomer() {

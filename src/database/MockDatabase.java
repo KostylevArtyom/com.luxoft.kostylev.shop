@@ -5,10 +5,10 @@ import java.util.List;
 
 public class MockDatabase implements Database {
     @Override
-    public List<String> readStringList() {
+    public List<String> readRowList() {
         return new ArrayList<>();
     }
 
     @Override
-    public void writeStringList(List<String> data) {}
+    public void writeObjectList(List data) {}
 }

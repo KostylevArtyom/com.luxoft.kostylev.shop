@@ -22,16 +22,17 @@ public class Customer {
     }
 
     private class StorablePositions {
-        static final int ID = 0;
-        static final int NAME = 1;
+        static final int ID = 1;
+        static final int NAME = 2;
     }
 
     @Override
     public String toString() {
         List<String> store = new ArrayList<>();
+        store.add(getClass().getSimpleName());
         store.add(StorablePositions.ID, getId().toString());
         store.add(StorablePositions.NAME, getName());
-        return String.join(Constants.STORE_SEPARATOR, store).concat("\n");
+        return String.join(Constants.STORE_SEPARATOR, store);
     }
 
     public Customer(String[] dataArray) {

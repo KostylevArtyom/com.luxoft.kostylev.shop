@@ -5,6 +5,7 @@ import exceptions.GoodNotExistException;
 import exceptions.NotEnoughAmountException;
 import exceptions.DataParseException;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,30 +22,33 @@ public class Shop {
         trades = new HashSet<>();
     }
 
-    public Shop(List<String> data) throws DataParseException {
+    public Shop(List<String> data) {
         this();
-        for (String dataRow : data) {
-            String[] dataRowArray = dataRow.split(Constants.STORE_SEPARATOR);
-            if (dataRowArray[0] == Customer.class.getName()) {
-                customers.add(new Customer(dataRowArray));
-            } else if (dataRowArray[0] == Stock.class.getName()) {
-                stocks.add(new Stock(dataRowArray));
-            } else if (dataRowArray[0] == Trade.class.getName()) {
-                trades.add(new Trade(dataRowArray,
-                        getCustomerById(Integer.valueOf(dataRowArray[0])),
-                        getGoodById(Integer.valueOf(dataRowArray[1]))));
-            } else
-                throw new DataParseException();
+        try {
+            for (String dataRow : data) {
+                String[] dataRowArray = dataRow.split(Constants.STORE_SEPARATOR);
+                if (dataRowArray[0].equals(Customer.class.getSimpleName())) {
+                    customers.add(new Customer(dataRowArray));
+                } else if (dataRowArray[0].equals(Stock.class.getSimpleName())) {
+                    stocks.add(new Stock(dataRowArray));
+                } else if (dataRowArray[0].equals(Trade.class.getSimpleName())) {
+                    trades.add(new Trade(dataRowArray,
+                            getCustomerById(Integer.valueOf(dataRowArray[1])),
+                            getGoodById(Integer.valueOf(dataRowArray[2]))));
+                } else
+                    throw new DataParseException();
+            }
+        } catch (DataParseException e) {
+            e.printStackTrace();
         }
     }
 
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Customer customer: customers) stringBuilder.append(customer.toString());
-        for (Stock stock: stocks) stringBuilder.append(stock.toString());
-        for (Trade trade: trades) stringBuilder.append(trade.toString());
-        return stringBuilder.toString();
+    public List toObjectArray() {
+        List data = new ArrayList();
+        data.addAll(customers);
+        data.addAll(stocks);
+        data.addAll(trades);
+        return data;
     }
 
     public Customer getCustomerById(Integer id) {
@@ -93,18 +97,26 @@ public class Shop {
         return trades;
     }
 
-    public void addTrade(Trade trade) throws CustomerNotExistException, GoodNotExistException, NotEnoughAmountException {
-        if (!getCustomers().contains(trade.customer))
-            throw new CustomerNotExistException();
-        if (!getGoods().contains(trade.good))
-            throw new GoodNotExistException();
-        if (stocks.stream()
-                .filter(s -> s.getGood() == trade.good)
-                .map(s -> s.getAmount())
-                .findAny()
-                .get() < trade.getAmount())
-            throw new NotEnoughAmountException();
-        trades.add(trade);
+    public void addTrade(Trade trade) {
+        try {
+            if (!getCustomers().contains(trade.customer))
+                throw new CustomerNotExistException();
+            if (!getGoods().contains(trade.good))
+                throw new GoodNotExistException();
+            if (stocks.stream()
+                    .filter(s -> s.getGood() == trade.good)
+                    .map(s -> s.getAmount())
+                    .findAny()
+                    .get() < trade.getAmount())
+                throw new NotEnoughAmountException();
+            trades.add(trade);
+        } catch (NotEnoughAmountException e) {
+            e.printStackTrace();
+        } catch (CustomerNotExistException e) {
+            e.printStackTrace();
+        } catch (GoodNotExistException e) {
+            e.printStackTrace();
+        }
     }
 
 //    public void removeTrade(Trade trade) {}
