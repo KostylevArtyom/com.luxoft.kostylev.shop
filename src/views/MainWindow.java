@@ -35,9 +35,21 @@ public class MainWindow extends JFrame {
         setVisible(true);
     }
 
-    public void loadData(String customersMockData[][], String stocksMockData[][], String tradesMockData[][]) {
-        customersNamedScrollTable.initializeRows(customersMockData);
-        stocksNamedScrollTable.initializeRows(stocksMockData);
-        tradesNamedScrollTable.initializeRows(tradesMockData);
+    public void addCustomer(String customerData[]) {
+        customersNamedScrollTable.addRow(customerData);
+    }
+
+    public void addStock(String stockData[]) {
+        customersNamedScrollTable.addRow(stockData);
+    }
+
+    public void addTrade(String tradeData[]) {
+        customersNamedScrollTable.addRow(tradeData);
+    }
+
+    public void loadData(String customersData[][], String stocksData[][], String tradesData[][]) {
+        customersNamedScrollTable.initializeRows(customersData);
+        stocksNamedScrollTable.initializeRows(stocksData);
+        tradesNamedScrollTable.initializeRows(tradesData);
     }
 }

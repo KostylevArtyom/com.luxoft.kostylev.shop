@@ -60,6 +60,10 @@ public class Shop {
         return stocks.stream().map(s -> s.getGood()).filter(s -> s.getId() == id).findAny().get();
     }
 
+    public Stock getStockByGoodId(Integer id) {
+        return stocks.stream().filter(s -> s.getGood().getId() == id).findAny().get();
+    }
+
     public Set<Customer> getCustomers() {
         return customers;
     }
@@ -85,9 +89,9 @@ public class Shop {
     }
 
     public void addStock(Stock stock) {
-        if (stocks.contains(stock))
+        if (stocks.stream().filter(s -> s.getGood().equals(stock.getGood())).findAny().isPresent())
             stocks.stream().filter(s -> s == stock).forEach(s -> {
-                s.addAmount(stock.getAmount());
+                s.setAmount(stock.getAmount());
                 s.setPrice(stock.getPrice());
             });
         else
