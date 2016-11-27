@@ -1,6 +1,5 @@
 import database.Database;
 import database.FileDatabase;
-import models.Shop;
 import views.MainWindow;
 
 public class Main {
