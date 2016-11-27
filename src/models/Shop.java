@@ -64,6 +64,18 @@ public class Shop {
         return customers;
     }
 
+    public String[][] getCustomersStringArray() {
+        return customers.stream().map(Customer::toStringArray).toArray(size -> new String[size][1]);
+    }
+
+    public String[][] getStocksStringArray() {
+        return stocks.stream().map(Stock::toStringArray).toArray(size -> new String[size][3]);
+    }
+
+    public String[][] getTradesStringArray() {
+        return trades.stream().map(Trade::toStringArray).toArray(size -> new String[size][5]);
+    }
+
     public void addCustomer(Customer customer) {
         customers.add(customer);
     }

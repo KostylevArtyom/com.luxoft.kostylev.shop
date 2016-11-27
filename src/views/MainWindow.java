@@ -8,8 +8,16 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainWindow extends JFrame {
+    private static NamedScrollTable customersNamedScrollTable;
+    private static NamedScrollTable stocksNamedScrollTable;
+    private static NamedScrollTable tradesNamedScrollTable;
+
     public MainWindow() {
         super("Shop");
+
+        customersNamedScrollTable = new NamedScrollTable("Customers", Customer.getAllClasses());
+        stocksNamedScrollTable = new NamedScrollTable("Stocks", Stock.getAllClasses());
+        tradesNamedScrollTable = new NamedScrollTable("Trades", Trade.getAllClasses());
     }
 
     public void launchFrame() {
@@ -19,15 +27,16 @@ public class MainWindow extends JFrame {
         setJMenuBar(new MenuBar());
         setSize(1000, 800);
 
-        String customersMockData[][] = {{"Alphonse"}, {"Barney"}, {"Clare"}, {"Demetra"}, {"Emma"}};
-        add(new NamedScrollTable("Customers", Customer.getAllClasses(), customersMockData));
-
-        String stocksMockData[][] = {{"Duck", "10", "3"}, {"Parrot", "3", "9.50"}};
-        add(new NamedScrollTable("Stocks", Stock.getAllClasses(), stocksMockData));
-
-        String tradesMockData[][] = {{"Alfred", "Duck", "3", "2.75", "27-11-16"}, {"Barney", "Parrot", "1", "10", "27-11-16"}};
-        add(new NamedScrollTable("Trades", Trade.getAllClasses(), tradesMockData));
+        add(customersNamedScrollTable);
+        add(stocksNamedScrollTable);
+        add(tradesNamedScrollTable);
 
         setVisible(true);
+    }
+
+    public void loadData(String customersMockData[][], String stocksMockData[][], String tradesMockData[][]) {
+        customersNamedScrollTable.initializeRows(customersMockData);
+        stocksNamedScrollTable.initializeRows(stocksMockData);
+        tradesNamedScrollTable.initializeRows(tradesMockData);
     }
 }
