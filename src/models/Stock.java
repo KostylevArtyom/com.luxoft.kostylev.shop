@@ -62,13 +62,6 @@ public class Stock {
         return super.hashCode();
     }
 
-    private class Positions {
-        static final int CLASS = 0;
-        static final int GOOD_ID = 1;
-        static final int AMOUNT = 2;
-        static final int PRICE = 3;
-    }
-
     private class StowablePositions {
         static final int GOOD_DESCRIPTION = 0;
         static final int AMOUNT = 1;
