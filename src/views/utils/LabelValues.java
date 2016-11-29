@@ -9,7 +9,7 @@ public final class LabelValues {
 
     public static String ADD_MENU_NAME = "Add";
     public static String ADD_CUSTOMER_MENU_NAME = "Add customer";
-    public static String ADD_GOOD_MENU_NAME = "Add good";
+    public static String ADD_STOCK_MENU_NAME = "Add stock";
     public static String ADD_TRADE_MENU_NAME = "Add trade";
 
     public static String EDIT_MENU_NAME = "Edit";

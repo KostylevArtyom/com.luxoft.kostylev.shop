@@ -11,27 +11,23 @@ import javax.swing.*;
 import java.util.Set;
 
 public class AddTradePanel extends JPanel {
-    private JComboBox customersComboBox;
-    private JComboBox goodsComboBox;
-    private JTextField amountTextField;
-
     public AddTradePanel() {
         add(new JLabel("Choose a customer:"));
         Set<Customer> customers = Main.shop.getCustomers();
-        customersComboBox = new JComboBox<>(customers.toArray(new Customer[customers.size()]));
+        JComboBox customersComboBox = new JComboBox<>(customers.toArray(new Customer[customers.size()]));
         customersComboBox.setEditable(true);
         add(customersComboBox);
 
         add(new JLabel("Choose a good:"));
         Set<Good> goods = Main.shop.getGoods();
-        goodsComboBox = new JComboBox<>(goods.toArray(new Good[goods.size()]));
+        JComboBox goodsComboBox = new JComboBox<>(goods.toArray(new Good[goods.size()]));
         goodsComboBox.setEditable(true);
         add(goodsComboBox);
 
         add(Box.createHorizontalStrut(15));
 
-        amountTextField = new JTextField(5);
         add(new JLabel("Type amount"));
+        JTextField amountTextField = new JTextField(5);
         add(amountTextField);
 
         int result = JOptionPane.showConfirmDialog(null, this, LabelValues.ADD_TRADE_MENU_NAME, JOptionPane.OK_CANCEL_OPTION);

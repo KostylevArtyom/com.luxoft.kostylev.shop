@@ -19,8 +19,8 @@ public abstract class ChangeStockFieldPanel extends JPanel {
 
         add(Box.createHorizontalStrut(15));
 
-        valueTextField = new JTextField(5);
         add(new JLabel(JTextFieldValue));
+        valueTextField = new JTextField(5);
         add(valueTextField);
 
         int result = JOptionPane.showConfirmDialog(null, this, showConfirmDialogValue, JOptionPane.OK_CANCEL_OPTION);

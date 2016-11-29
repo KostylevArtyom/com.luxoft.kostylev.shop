@@ -27,16 +27,9 @@ public class MenuBar extends JMenuBar {
         });
         addMenu.add(addCustomerMenu);
 
-        JMenuItem addGoodMenu = new JMenuItem(LabelValues.ADD_GOOD_MENU_NAME);
-        addGoodMenu.addActionListener(e -> {
-            String name = JOptionPane.showInputDialog(new JFrame(), "Type good name", "");
-            if ((name != null) && (name.length() > 0)) {
-                Stock newStock = new Stock(new Good(name), 0, null);
-                Main.shop.addStock(newStock);
-                Main.mainWindow.addStock(newStock.toStringArray());
-            }
-        });
-        addMenu.add(addGoodMenu);
+        JMenuItem addStockMenu = new JMenuItem(LabelValues.ADD_STOCK_MENU_NAME);
+        addStockMenu.addActionListener(e -> new AddStockPanel());
+        addMenu.add(addStockMenu);
 
         JMenuItem addTradeMenu = new JMenuItem(LabelValues.ADD_TRADE_MENU_NAME);
         addTradeMenu.addActionListener(e -> new AddTradePanel());
