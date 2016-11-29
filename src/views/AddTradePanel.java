@@ -37,6 +37,7 @@ public class AddTradePanel extends JPanel {
                     (Customer)customersComboBox.getSelectedItem(),
                     stock,
                     Integer.valueOf(amountTextField.getText())));
+            Main.mainWindow.loadStocksData(Main.shop.getStocksStringArray());
             Main.mainWindow.loadTradesData(Main.shop.getTradesStringArray());
         }
     }

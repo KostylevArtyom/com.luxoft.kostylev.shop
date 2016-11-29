@@ -34,7 +34,7 @@ public class Stock implements Arrayable {
         this(new Good(
                         dataArray[StorablePositions.GOOD_DESCRIPTION],
                         Integer.valueOf(dataArray[StorablePositions.GOOD_ID])
-                ),  Integer.valueOf(dataArray[StorablePositions.AMOUNT]),
+                ), Integer.valueOf(dataArray[StorablePositions.AMOUNT]),
                 (dataArray[StorablePositions.PRICE].equals("null")) ?
                         null : Double.valueOf(dataArray[StorablePositions.PRICE]));
     }
@@ -71,6 +71,11 @@ public class Stock implements Arrayable {
 
     public void addAmount(Integer amount) {
         setAmount(getAmount() + amount);
+    }
+
+    public void subtractAmount(Integer amount) {
+        if (getAmount() >= amount)
+            setAmount(getAmount() - amount);
     }
 
     public Double getPrice() {

@@ -127,6 +127,7 @@ public class Shop {
                     .get() < trade.getAmount())
                 throw new NotEnoughAmountException();
             trades.add(trade);
+            getStockByGoodId(trade.getGood().getId()).subtractAmount(trade.getAmount());
         } catch (NotEnoughAmountException e) {
             e.printStackTrace();
         } catch (CustomerNotExistException e) {
