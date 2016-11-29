@@ -43,7 +43,7 @@ public class AddTradePanel extends JPanel {
                         stock,
                         Integer.valueOf(amountTextField.getText()));
                 Main.shop.addTrade(trade);
-                Main.mainWindow.addTrade(trade.toStringArray());
+                Main.mainWindow.loadStocksData(Main.shop.getStocksStringArray());
                 Main.mainWindow.addTrade(trade.toStringArray());
             }
         }
