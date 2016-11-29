@@ -1,16 +1,13 @@
 package views;
 
-import database.Database;
-import database.TextFileDatabase;
+import exceptions.DatabaseClassIndexAlreadyExistException;
 import main.Main;
 import models.Customer;
-import models.Shop;
 import models.Stock;
 import views.utils.CheckCorrectValueUtils;
 import views.utils.LabelValues;
 
 import javax.swing.*;
-import java.nio.file.Path;
 
 public class MenuBar extends JMenuBar {
     public MenuBar() {
@@ -21,7 +18,11 @@ public class MenuBar extends JMenuBar {
             String name = JOptionPane.showInputDialog(new JFrame(), "Type customer name", "");
             if ((name = CheckCorrectValueUtils.parseNotEmptyString(name)) != null) {
                 Customer newCustomer = new Customer(name);
-                Main.shop.addCustomer(newCustomer);
+                try {
+                    Main.shop.addCustomer(newCustomer);
+                } catch (DatabaseClassIndexAlreadyExistException e1) {
+                    e1.printStackTrace();
+                }
                 Main.mainWindow.addCustomer(newCustomer.toStringArray());
             }
         });
@@ -80,33 +81,33 @@ public class MenuBar extends JMenuBar {
         JMenu storageMenu = new JMenu(LabelValues.STORAGE_MENU_NAME);
 
         JMenuItem storageLoadMenu = new JMenuItem(LabelValues.STORAGE_LOAD_MENU_NAME);
-        storageLoadMenu.addActionListener(e -> {
-            final JFileChooser jFileChooser = new JFileChooser();
-            int result = jFileChooser.showOpenDialog(null);
-            if (result == JFileChooser.APPROVE_OPTION) {
-                Path path = jFileChooser.getSelectedFile().toPath();
-                Database database = new TextFileDatabase(path);
-                Main.shop = new Shop(database.readRowList());
-
-                Main.mainWindow.loadData(
-                        Main.shop.getCustomersStringArray(),
-                        Main.shop.getStocksStringArray(),
-                        Main.shop.getTradesStringArray());
-            }
-        });
+//        storageLoadMenu.addActionListener(e -> {
+//            final JFileChooser jFileChooser = new JFileChooser();
+//            int result = jFileChooser.showOpenDialog(null);
+//            if (result == JFileChooser.APPROVE_OPTION) {
+//                Path path = jFileChooser.getSelectedFile().toPath();
+//                Database database = new TextFileDatabase(path);
+//                Main.shop = new Shop(database.readRowList());
+//
+//                Main.mainWindow.loadData(
+//                        Main.shop.getCustomersStringArray(),
+//                        Main.shop.getStocksStringArray(),
+//                        Main.shop.getTradesStringArray());
+//            }
+//        });
         storageMenu.add(storageLoadMenu);
 
         JMenuItem storageSaveMenu = new JMenuItem(LabelValues.STORAGE_SAVE_MENU_NAME);
-        storageSaveMenu.addActionListener(e -> {
-            final JFileChooser jFileChooser = new JFileChooser();
-            int result = jFileChooser.showSaveDialog(null);
-            if (result == JFileChooser.APPROVE_OPTION) {
-                Path path = jFileChooser.getSelectedFile().toPath();
-                Database database = new TextFileDatabase(path);
-
-                database.writeObjectList(Main.shop.toObjectArray());
-            }
-        });
+//        storageSaveMenu.addActionListener(e -> {
+//            final JFileChooser jFileChooser = new JFileChooser();
+//            int result = jFileChooser.showSaveDialog(null);
+//            if (result == JFileChooser.APPROVE_OPTION) {
+//                Path path = jFileChooser.getSelectedFile().toPath();
+//                Database database = new TextFileDatabase(path);
+//
+//                database.writeObjectList(Main.shop.toObjectArray());
+//            }
+//        });
         storageMenu.add(storageSaveMenu);
 
         add(storageMenu);

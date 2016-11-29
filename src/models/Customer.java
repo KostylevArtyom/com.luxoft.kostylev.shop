@@ -1,49 +1,42 @@
 package models;
 
+import database.Storable;
 import models.utils.Arrayable;
 import models.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Customer implements Arrayable {
+public class Customer extends Storable implements Arrayable {
     private static Integer id_counter = 0;
-
-    private Integer id;
     private String name;
 
-    public Customer(String name) {
-        this.id = ++id_counter;
+    private void initializeFields(String name) {
         this.name = name;
+    }
+
+    public Customer(String name) {
+        super(++id_counter);
+        initializeFields(name);
     }
 
     private Customer(String name, Integer id) {
+        super(id);
         if (id_counter <= id)
             id_counter = id + 1;
-        this.id = id;
-        this.name = name;
+        initializeFields(name);
     }
 
-    private class StorablePositions {
-        static final int ID = 1;
-        static final int NAME = 2;
+    private class ToStringPositions {
+        static final int NAME = 1;
     }
 
     @Override
     public String toString() {
         List<String> store = new ArrayList<>();
-        store.add(getClass().getSimpleName());
-        store.add(StorablePositions.ID, getId().toString());
-        store.add(StorablePositions.NAME, getName());
-        return String.join(Constants.STORE_SEPARATOR, store);
-    }
-
-    public Customer(String[] dataArray) {
-        this(dataArray[StorablePositions.NAME], Integer.valueOf(dataArray[StorablePositions.ID]));
-    }
-
-    public Integer getId() {
-        return id;
+        store.add(super.toString());
+        store.add(ToStringPositions.NAME, getName());
+        return String.join(Constants.SHOW_SEPARATOR, store);
     }
 
     public String getName() {
@@ -67,19 +60,22 @@ public class Customer implements Arrayable {
 
     @Override
     public int hashCode() {
-        return id;
+        return super.getId();
     }
 
     private class ShowablePositions {
-        static final int NAME = 0;
+        static final int ID = 0;
+        static final int NAME = 1;
     }
 
     private class ShowableNames {
+        static final String ID = "ID";
         static final String NAME = "Name";
     }
 
     public static String[] getAllClasses() {
         List<String> store = new ArrayList<>();
+        store.add(ShowablePositions.ID, ShowableNames.ID);
         store.add(ShowablePositions.NAME, ShowableNames.NAME);
         return store.toArray(new String[store.size()]);
     }
@@ -87,7 +83,8 @@ public class Customer implements Arrayable {
     @Override
     public String[] toStringArray() {
         List<String> store = new ArrayList<>();
-        store.add(ShowablePositions.NAME, name);
+        store.add(ShowablePositions.ID, getId().toString());
+        store.add(ShowablePositions.NAME, getName());
         return store.toArray(new String[store.size()]);
     }
 }

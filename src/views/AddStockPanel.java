@@ -1,5 +1,6 @@
 package views;
 
+import exceptions.DatabaseClassIndexAlreadyExistException;
 import main.Main;
 import models.Good;
 import models.Stock;
@@ -33,7 +34,11 @@ public class AddStockPanel extends JPanel {
             Double price = CheckCorrectValueUtils.parsePositiveDouble(priceTextField.getText());
             if ((goodDescription != null) && (amount != null) && (price != null)) {
                 Stock newStock = new Stock(new Good(goodDescription), amount, price);
-                Main.shop.addStock(newStock);
+                try {
+                    Main.shop.addStock(newStock);
+                } catch (DatabaseClassIndexAlreadyExistException e) {
+                    e.printStackTrace();
+                }
                 Main.mainWindow.addStock(newStock.toStringArray());
             }
         }

@@ -1,56 +1,51 @@
 package models;
 
+import database.Storable;
+import exceptions.NotEnoughAmountException;
 import models.utils.Arrayable;
 import models.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Stock implements Arrayable {
+public class Stock extends Storable implements Arrayable {
+    private static Integer id_counter = 0;
     private Good good;
     private Integer amount;
     private Double price;
 
-    public Stock(Good good, Integer amount) {
-        this.good = good;
-        this.amount = amount;
-        this.price = null;
-    }
-
-    public Stock(Good good, Integer amount, Double price) {
+    private void initializeFields(Good good, Integer amount, Double price) {
         this.good = good;
         this.amount = amount;
         this.price = price;
     }
 
-    private class StorablePositions {
-        static final int GOOD_ID = 1;
-        static final int GOOD_DESCRIPTION = 2;
-        static final int AMOUNT = 3;
-        static final int PRICE = 4;
+    public Stock(Good good, Integer amount, Double price) {
+        super(++id_counter);
+        initializeFields(good, amount, price);
     }
 
-    public Stock(String[] dataArray) {
-        this(new Good(
-                        dataArray[StorablePositions.GOOD_DESCRIPTION],
-                        Integer.valueOf(dataArray[StorablePositions.GOOD_ID])
-                ), Integer.valueOf(dataArray[StorablePositions.AMOUNT]),
-                (dataArray[StorablePositions.PRICE].equals("null")) ?
-                        null : Double.valueOf(dataArray[StorablePositions.PRICE]));
+    public Stock(Good good, Integer amount, Double price, Integer id) {
+        super(id);
+        if (id_counter <= id)
+            id_counter = id + 1;
+        initializeFields(good, amount, price);
+    }
+
+    private class ToStringPositions {
+        static final int GOOD = 1;
+        static final int AMOUNT = 2;
+        static final int PRICE = 3;
     }
 
     @Override
     public String toString() {
         List<String> store = new ArrayList<>();
-        store.add(getClass().getSimpleName());
-        store.add(StorablePositions.GOOD_ID, getGood().getId().toString());
-        store.add(StorablePositions.GOOD_DESCRIPTION, getGood().getDescription());
-        store.add(StorablePositions.AMOUNT, getAmount().toString());
-        if (getPrice() == null)
-            store.add(StorablePositions.PRICE, "null");
-        else
-            store.add(StorablePositions.PRICE, getPrice().toString());
-        return String.join(Constants.STORE_SEPARATOR, store);
+        store.add(super.toString());
+        store.add(ToStringPositions.GOOD, Constants.wrapString(getGood().toString()));
+        store.add(ToStringPositions.AMOUNT, getAmount().toString());
+        store.add(ToStringPositions.PRICE, getPrice().toString());
+        return String.join(Constants.SHOW_SEPARATOR, store);
     }
 
     public Good getGood() {
@@ -73,9 +68,11 @@ public class Stock implements Arrayable {
         setAmount(getAmount() + amount);
     }
 
-    public void subtractAmount(Integer amount) {
+    public void subtractAmount(Integer amount) throws NotEnoughAmountException {
         if (getAmount() >= amount)
             setAmount(getAmount() - amount);
+        else
+            throw new NotEnoughAmountException();
     }
 
     public Double getPrice() {
@@ -101,20 +98,23 @@ public class Stock implements Arrayable {
     }
 
     private class ShowablePositions {
-        static final int GOOD_DESCRIPTION = 0;
+        static final int ID = 0;
+        static final int GOOD = 0;
         static final int AMOUNT = 1;
         static final int PRICE = 2;
     }
 
     private class ShowableNames {
-        static final String GOOD_DESCRIPTION = "Good";
+        static final String ID = "ID";
+        static final String GOOD = "Good";
         static final String AMOUNT = "Amount";
         static final String PRICE = "Price";
     }
 
     public static String[] getAllClasses() {
         List<String> store = new ArrayList<>();
-        store.add(ShowablePositions.GOOD_DESCRIPTION, ShowableNames.GOOD_DESCRIPTION);
+        store.add(ShowablePositions.ID, ShowableNames.ID);
+        store.add(ShowablePositions.GOOD, ShowableNames.GOOD);
         store.add(ShowablePositions.AMOUNT, ShowableNames.AMOUNT);
         store.add(ShowablePositions.PRICE, ShowableNames.PRICE);
         return store.toArray(new String[store.size()]);
@@ -123,12 +123,10 @@ public class Stock implements Arrayable {
     @Override
     public String[] toStringArray() {
         List<String> store = new ArrayList<>();
-        store.add(ShowablePositions.GOOD_DESCRIPTION, getGood().getDescription());
+        store.add(ShowablePositions.ID, getId().toString());
+        store.add(ShowablePositions.GOOD, getGood().toString());
         store.add(ShowablePositions.AMOUNT, getAmount().toString());
-        if (getPrice() == null)
-            store.add(ShowablePositions.PRICE, "null");
-        else
-            store.add(ShowablePositions.PRICE, getPrice().toString());
+        store.add(ShowablePositions.PRICE, getPrice().toString());
         return store.toArray(new String[store.size()]);
     }
 }

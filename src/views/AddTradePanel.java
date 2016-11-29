@@ -1,5 +1,6 @@
 package views;
 
+import exceptions.DatabaseClassIndexNotExistException;
 import main.Main;
 import models.Customer;
 import models.Good;
@@ -37,14 +38,22 @@ public class AddTradePanel extends JPanel {
             if ((CheckCorrectValueUtils.checkJComboBoxSelectCorrect(customersComboBox)) &&
                     (CheckCorrectValueUtils.checkJComboBoxSelectCorrect(goodsComboBox)) &&
                     amount != null) {
-                Stock stock = Main.shop.getStockByGoodId(((Good) goodsComboBox.getSelectedItem()).getId());
+                Stock stock = null;
+                try {
+                    stock = Main.shop.getStockByGoodId(((Good) goodsComboBox.getSelectedItem()).getId());
+                } catch (DatabaseClassIndexNotExistException e) {
+                    e.printStackTrace();
+                }
                 Trade trade = new Trade(
                         (Customer) customersComboBox.getSelectedItem(),
                         stock,
                         Integer.valueOf(amountTextField.getText()));
-                Main.shop.addTrade(trade);
+                try {
+                    Main.shop.addTrade(trade);
+                } catch (Exception e) {
+                }
                 Main.mainWindow.loadStocksData(Main.shop.getStocksStringArray());
-                Main.mainWindow.addTrade(trade.toStringArray());
+                Main.mainWindow.loadTradesData(Main.shop.getTradesStringArray());
             }
         }
     }

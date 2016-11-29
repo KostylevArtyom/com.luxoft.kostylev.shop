@@ -1,44 +1,42 @@
 package models;
 
+import database.Storable;
 import models.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Good {
+public class Good extends Storable {
     private static Integer id_counter = 0;
 
-    private Integer id;
     private String description;
 
-    public Good(String description) {
-        this.id = ++id_counter;
+    private void initializeFields(String description) {
         this.description = description;
+    }
+
+    public Good(String description) {
+        super(++id_counter);
+        initializeFields(description);
     }
 
     Good(String description, Integer id) {
+        super(id);
         if (id_counter <= id)
             id_counter = id + 1;
-        this.id = id;
-        this.description = description;
+        initializeFields(description);
     }
 
-    private class StorablePositions {
-        static final int ID = 1;
-        static final int DESCRIPTION = 2;
+    private class ToStringPositions {
+        static final int DESCRIPTION = 1;
     }
 
     @Override
     public String toString() {
         List<String> store = new ArrayList<>();
-        store.add(getClass().getSimpleName());
-        store.add(StorablePositions.ID, getId().toString());
-        store.add(StorablePositions.DESCRIPTION, getDescription());
-        return String.join(Constants.STORE_SEPARATOR, store);
-    }
-
-    public Integer getId() {
-        return id;
+        store.add(super.toString());
+        store.add(ToStringPositions.DESCRIPTION, getDescription());
+        return String.join(Constants.SHOW_SEPARATOR, store);
     }
 
     public String getDescription() {
@@ -62,6 +60,6 @@ public class Good {
 
     @Override
     public int hashCode() {
-        return id;
+        return super.getId();
     }
 }
