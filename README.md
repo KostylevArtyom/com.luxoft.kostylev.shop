@@ -10,6 +10,6 @@ Abstract shop Swing application
 
 1. Clone the [repository](https://github.com/KostylevArtyom/com.luxoft.kostylev.shop.git)
 
-2. Add the JUnit library to the project if necessary
+2. Add the JUnit 4 library to the project for unit testing if necessary
 
 3. Run application
