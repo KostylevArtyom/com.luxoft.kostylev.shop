@@ -2,8 +2,11 @@ package models;
 
 import database.Database;
 import database.InMemoryArrayListDatabase;
+import database.Storable;
 import exceptions.*;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -87,6 +90,10 @@ public class Shop {
     }
 
 //    public void removeTrade(Trade trade) {}
+
+    public List<Storable> getStorablesList() {
+        return database.readAllObjects();
+    }
 
     public String[][] getCustomersStringArray() {
         return getCustomers().stream().map(Customer::toStringArray).toArray(size -> new String[size][1]);

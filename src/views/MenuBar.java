@@ -1,5 +1,7 @@
 package views;
 
+import database.Database;
+import database.TextFileDatabase;
 import exceptions.DatabaseClassIndexAlreadyExistException;
 import main.Main;
 import models.Customer;
@@ -8,6 +10,7 @@ import views.utils.CheckCorrectValueUtils;
 import views.utils.LabelValues;
 
 import javax.swing.*;
+import java.nio.file.Path;
 
 public class MenuBar extends JMenuBar {
     public MenuBar() {
@@ -98,16 +101,19 @@ public class MenuBar extends JMenuBar {
         storageMenu.add(storageLoadMenu);
 
         JMenuItem storageSaveMenu = new JMenuItem(LabelValues.STORAGE_SAVE_MENU_NAME);
-//        storageSaveMenu.addActionListener(e -> {
-//            final JFileChooser jFileChooser = new JFileChooser();
-//            int result = jFileChooser.showSaveDialog(null);
-//            if (result == JFileChooser.APPROVE_OPTION) {
-//                Path path = jFileChooser.getSelectedFile().toPath();
-//                Database database = new TextFileDatabase(path);
-//
-//                database.writeObjectList(Main.shop.toObjectArray());
-//            }
-//        });
+        storageSaveMenu.addActionListener(e -> {
+            final JFileChooser jFileChooser = new JFileChooser();
+            int result = jFileChooser.showSaveDialog(null);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                Path path = jFileChooser.getSelectedFile().toPath();
+                Database database = new TextFileDatabase(path);
+                try {
+                    database.writeObjects(Main.shop.getStorablesList());
+                } catch (DatabaseClassIndexAlreadyExistException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
         storageMenu.add(storageSaveMenu);
 
         add(storageMenu);

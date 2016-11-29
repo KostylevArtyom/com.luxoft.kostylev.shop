@@ -45,23 +45,40 @@ public class Trade extends Storable implements Arrayable {
     }
 
     private class ToStringPositions {
-        static final int CUSTOMER = 1;
-        static final int GOOD = 2;
-        static final int AMOUNT = 3;
-        static final int UNIT_COST = 4;
-        static final int TIME = 5;
+        static final int CUSTOMER = 0;
+        static final int GOOD = 1;
+        static final int AMOUNT = 2;
+        static final int UNIT_COST = 3;
+        static final int TIME = 4;
     }
 
     @Override
     public String toString() {
         List<String> store = new ArrayList<>();
-        store.add(super.toString());
         store.add(ToStringPositions.CUSTOMER, Constants.wrapString(getCustomer().toString()));
         store.add(ToStringPositions.GOOD, Constants.wrapString(getGood().toString()));
         store.add(ToStringPositions.AMOUNT, getAmount().toString());
         store.add(ToStringPositions.UNIT_COST, getUnitCost().toString());
         store.add(ToStringPositions.TIME, getTime().toString());
-        return String.join(Constants.SHOW_SEPARATOR, store);
+        return super.toString() + String.join(Constants.SHOW_ITEMS_SEPARATOR, store);
+    }
+
+    private class StorablePositions {
+        static final int ID = 0;
+        static final int GOOD_ID = 1;
+        static final int AMOUNT = 2;
+        static final int UNIT_COST = 3;
+        static final int TIME = 4;
+    }
+
+    public String toStorableString() {
+        List<String> store = new ArrayList<>();
+        store.add(StorablePositions.ID, super.toStorableString());
+        store.add(StorablePositions.GOOD_ID, getGood().getId().toString());
+        store.add(StorablePositions.AMOUNT, getAmount().toString());
+        store.add(StorablePositions.UNIT_COST, getUnitCost().toString());
+        store.add(StorablePositions.TIME, getTime().toString());
+        return String.join(Constants.STORE_SEPARATOR, store);
     }
 
     public Customer getCustomer() {

@@ -12,4 +12,6 @@ public interface Database {
     void writeObjects(List<Storable> objectList) throws DatabaseClassIndexAlreadyExistException;
     void updateObject(Storable object);
     void updateObjects(List<Storable> objectList);
+//    void deleteObject(Storable object);
+//    void deleteObjects(List<Storable> objectList);
 }

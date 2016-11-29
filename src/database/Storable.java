@@ -1,5 +1,7 @@
 package database;
 
+import models.utils.Constants;
+
 public abstract class Storable {
     private Integer id;
 
@@ -7,16 +9,23 @@ public abstract class Storable {
         this.id = id;
     }
 
-    public Integer getId() {
+    public final Integer getId() {
         return id;
     }
 
-    public String getClassSimpleName() {
+    public final String getClassSimpleName() {
         return this.getClass().getSimpleName();
     }
 
     @Override
     public String toString() {
-        return getClassSimpleName() + "(" + getId() + "): ";
+        return getClassSimpleName()
+                + Constants.SHOW_CLASS_WRAPPER_LEFT + getId()
+                + Constants.SHOW_CLASS_WRAPPER_RIGHT
+                + Constants.SHOW_CLASS_SEPARATOR;
+    }
+
+    public String toStorableString() {
+        return getClassSimpleName() + Constants.STORE_SEPARATOR + getId();
     }
 }

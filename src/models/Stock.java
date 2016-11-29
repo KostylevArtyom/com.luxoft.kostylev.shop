@@ -33,19 +33,36 @@ public class Stock extends Storable implements Arrayable {
     }
 
     private class ToStringPositions {
-        static final int GOOD = 1;
-        static final int AMOUNT = 2;
-        static final int PRICE = 3;
+        static final int GOOD = 0;
+        static final int AMOUNT = 1;
+        static final int PRICE = 2;
     }
 
     @Override
     public String toString() {
         List<String> store = new ArrayList<>();
-        store.add(super.toString());
         store.add(ToStringPositions.GOOD, Constants.wrapString(getGood().toString()));
         store.add(ToStringPositions.AMOUNT, getAmount().toString());
         store.add(ToStringPositions.PRICE, getPrice().toString());
-        return String.join(Constants.SHOW_SEPARATOR, store);
+        return super.toString() + String.join(Constants.SHOW_ITEMS_SEPARATOR, store);
+    }
+
+    private class StorablePositions {
+        static final int ID = 0;
+        static final int GOOD_ID = 1;
+        static final int GOOD_DESCRIPTION = 2;
+        static final int AMOUNT = 3;
+        static final int PRICE = 4;
+    }
+
+    public String toStorableString() {
+        List<String> store = new ArrayList<>();
+        store.add(StorablePositions.ID, super.toStorableString());
+        store.add(StorablePositions.GOOD_ID, getGood().getId().toString());
+        store.add(StorablePositions.GOOD_DESCRIPTION, getGood().getDescription());
+        store.add(StorablePositions.AMOUNT, getAmount().toString());
+        store.add(StorablePositions.PRICE, getPrice().toString());
+        return String.join(Constants.STORE_SEPARATOR, store);
     }
 
     public Good getGood() {

@@ -28,15 +28,26 @@ public class Good extends Storable {
     }
 
     private class ToStringPositions {
-        static final int DESCRIPTION = 1;
+        static final int DESCRIPTION = 0;
     }
 
     @Override
     public String toString() {
         List<String> store = new ArrayList<>();
-        store.add(super.toString());
         store.add(ToStringPositions.DESCRIPTION, getDescription());
-        return String.join(Constants.SHOW_SEPARATOR, store);
+        return super.toString() + String.join(Constants.SHOW_ITEMS_SEPARATOR, store);
+    }
+
+    private class StorablePositions {
+        static final int ID = 0;
+        static final int DESCRIPTION = 1;
+    }
+
+    public String toStorableString() {
+        List<String> store = new ArrayList<>();
+        store.add(StorablePositions.ID, super.toStorableString());
+        store.add(StorablePositions.DESCRIPTION, getDescription());
+        return String.join(Constants.STORE_SEPARATOR, store);
     }
 
     public String getDescription() {
