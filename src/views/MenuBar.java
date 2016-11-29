@@ -39,6 +39,7 @@ public class MenuBar extends JMenuBar {
         addMenu.add(addGoodMenu);
 
         JMenuItem addTradeMenu = new JMenuItem(LabelValues.ADD_TRADE_MENU_NAME);
+        addTradeMenu.addActionListener(e -> new AddTradePanel());
         addMenu.add(addTradeMenu);
 
         add(addMenu);
