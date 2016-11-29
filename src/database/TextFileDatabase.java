@@ -9,14 +9,14 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TextFileCommaSeparatedDatabase implements Database {
+public class TextFileDatabase implements Database {
     private Path filePath;
 
-    public TextFileCommaSeparatedDatabase(String fileName) {
+    public TextFileDatabase(String fileName) {
         this.filePath = Paths.get(fileName);
     }
 
-    public TextFileCommaSeparatedDatabase(Path filePath) {
+    public TextFileDatabase(Path filePath) {
         this.filePath = filePath;
     }
 

@@ -1,10 +1,9 @@
 package views;
 
 import database.Database;
-import database.TextFileCommaSeparatedDatabase;
+import database.TextFileDatabase;
 import main.Main;
 import models.Customer;
-import models.Good;
 import models.Shop;
 import models.Stock;
 import views.utils.LabelValues;
@@ -79,7 +78,7 @@ public class MenuBar extends JMenuBar {
             int result = jFileChooser.showOpenDialog(null);
             if (result == JFileChooser.APPROVE_OPTION) {
                 Path path = jFileChooser.getSelectedFile().toPath();
-                Database database = new TextFileCommaSeparatedDatabase(path);
+                Database database = new TextFileDatabase(path);
                 Main.shop = new Shop(database.readRowList());
 
                 Main.mainWindow.loadData(
@@ -96,7 +95,7 @@ public class MenuBar extends JMenuBar {
             int result = jFileChooser.showSaveDialog(null);
             if (result == JFileChooser.APPROVE_OPTION) {
                 Path path = jFileChooser.getSelectedFile().toPath();
-                Database database = new TextFileCommaSeparatedDatabase(path);
+                Database database = new TextFileDatabase(path);
 
                 database.writeObjectList(Main.shop.toObjectArray());
             }
