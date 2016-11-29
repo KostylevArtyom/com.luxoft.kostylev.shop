@@ -6,6 +6,7 @@ import main.Main;
 import models.Customer;
 import models.Shop;
 import models.Stock;
+import views.utils.CheckCorrectValueUtils;
 import views.utils.LabelValues;
 
 import javax.swing.*;
@@ -18,7 +19,7 @@ public class MenuBar extends JMenuBar {
         JMenuItem addCustomerMenu = new JMenuItem(LabelValues.ADD_CUSTOMER_MENU_NAME);
         addCustomerMenu.addActionListener(e -> {
             String name = JOptionPane.showInputDialog(new JFrame(), "Type customer name", "");
-            if ((name != null) && (name.length() > 0)) {
+            if ((name = CheckCorrectValueUtils.parseNotEmptyString(name)) != null) {
                 Customer newCustomer = new Customer(name);
                 Main.shop.addCustomer(newCustomer);
                 Main.mainWindow.addCustomer(newCustomer.toStringArray());
@@ -43,7 +44,9 @@ public class MenuBar extends JMenuBar {
                 e -> new ChangeStockFieldPanel(LabelValues.ADD_GOOD_AMOUNT_MENU_NAME, "Type additional amount") {
             @Override
             public void makeAction() {
-                ((Stock)getStocksComboBox().getSelectedItem()).addAmount(Integer.valueOf(getValueTextField().getText()));
+                Integer amount = CheckCorrectValueUtils.parsePositiveInteger(getValueTextFieldText());
+                if (CheckCorrectValueUtils.checkJComboBoxSelectCorrect(getStocksComboBox()) && amount != null)
+                    ((Stock) getStocksComboBox().getSelectedItem()).addAmount(amount);
             }
         });
         editMenu.add(addGoodAmountMenu);
@@ -53,7 +56,9 @@ public class MenuBar extends JMenuBar {
                 e -> new ChangeStockFieldPanel(LabelValues.EDIT_GOOD_AMOUNT_MENU_NAME, "Type new amount") {
             @Override
             public void makeAction() {
-                ((Stock)getStocksComboBox().getSelectedItem()).setAmount(Integer.valueOf(getValueTextField().getText()));
+                Integer amount = CheckCorrectValueUtils.parsePositiveInteger(getValueTextFieldText());
+                if (CheckCorrectValueUtils.checkJComboBoxSelectCorrect(getStocksComboBox()) && amount != null)
+                    ((Stock) getStocksComboBox().getSelectedItem()).setAmount(amount);
             }
         });
         editMenu.add(editGoodAmountMenu);
@@ -63,7 +68,9 @@ public class MenuBar extends JMenuBar {
                 e -> new ChangeStockFieldPanel(LabelValues.EDIT_GOOD_PRICE_MENU_NAME, "Type new price") {
             @Override
             public void makeAction() {
-                ((Stock)getStocksComboBox().getSelectedItem()).setPrice(Double.valueOf(getValueTextField().getText()));
+                Double price = CheckCorrectValueUtils.parsePositiveDouble(getValueTextFieldText());
+                if (CheckCorrectValueUtils.checkJComboBoxSelectCorrect(getStocksComboBox()) && price != null)
+                    ((Stock) getStocksComboBox().getSelectedItem()).setPrice(price);
             }
         });
         editMenu.add(editGoodPriceMenu);

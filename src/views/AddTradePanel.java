@@ -5,6 +5,7 @@ import models.Customer;
 import models.Good;
 import models.Stock;
 import models.Trade;
+import views.utils.CheckCorrectValueUtils;
 import views.utils.LabelValues;
 
 import javax.swing.*;
@@ -32,13 +33,18 @@ public class AddTradePanel extends JPanel {
 
         int result = JOptionPane.showConfirmDialog(null, this, LabelValues.ADD_TRADE_MENU_NAME, JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
-            Stock stock = Main.shop.getStockByGoodId(((Good)goodsComboBox.getSelectedItem()).getId());
-            Main.shop.addTrade(new Trade(
-                    (Customer)customersComboBox.getSelectedItem(),
-                    stock,
-                    Integer.valueOf(amountTextField.getText())));
-            Main.mainWindow.loadStocksData(Main.shop.getStocksStringArray());
-            Main.mainWindow.loadTradesData(Main.shop.getTradesStringArray());
+            Integer amount = CheckCorrectValueUtils.parsePositiveInteger(amountTextField.getText());
+            if ((CheckCorrectValueUtils.checkJComboBoxSelectCorrect(customersComboBox)) &&
+                    (CheckCorrectValueUtils.checkJComboBoxSelectCorrect(goodsComboBox)) &&
+                    amount != null) {
+                Stock stock = Main.shop.getStockByGoodId(((Good) goodsComboBox.getSelectedItem()).getId());
+                Main.shop.addTrade(new Trade(
+                        (Customer) customersComboBox.getSelectedItem(),
+                        stock,
+                        Integer.valueOf(amountTextField.getText())));
+                Main.mainWindow.loadStocksData(Main.shop.getStocksStringArray());
+                Main.mainWindow.loadTradesData(Main.shop.getTradesStringArray());
+            }
         }
     }
 }

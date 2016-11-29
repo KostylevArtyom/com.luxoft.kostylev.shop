@@ -34,8 +34,8 @@ public abstract class ChangeStockFieldPanel extends JPanel {
         return stocksComboBox;
     }
 
-    public JTextField getValueTextField() {
-        return valueTextField;
+    public String getValueTextFieldText() {
+        return valueTextField.getText();
     }
 
     public abstract void makeAction();
