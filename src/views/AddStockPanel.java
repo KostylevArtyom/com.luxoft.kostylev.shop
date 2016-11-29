@@ -21,7 +21,7 @@ public class AddStockPanel extends JPanel {
 
         add(Box.createHorizontalStrut(15));
 
-        add(new JLabel("Type amount"));
+        add(new JLabel("Type price"));
         JTextField priceTextField = new JTextField(5);
         add(priceTextField);
 
