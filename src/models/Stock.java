@@ -35,7 +35,8 @@ public class Stock implements Arrayable {
                         dataArray[StorablePositions.GOOD_DESCRIPTION],
                         Integer.valueOf(dataArray[StorablePositions.GOOD_ID])
                 ),  Integer.valueOf(dataArray[StorablePositions.AMOUNT]),
-                Double.valueOf(dataArray[StorablePositions.PRICE]));
+                (dataArray[StorablePositions.PRICE].equals("null")) ?
+                        null : Double.valueOf(dataArray[StorablePositions.PRICE]));
     }
 
     @Override
@@ -45,7 +46,10 @@ public class Stock implements Arrayable {
         store.add(StorablePositions.GOOD_ID, getGood().getId().toString());
         store.add(StorablePositions.GOOD_DESCRIPTION, getGood().getDescription());
         store.add(StorablePositions.AMOUNT, getAmount().toString());
-        store.add(StorablePositions.PRICE, getPrice().toString());
+        if (getPrice() == null)
+            store.add(StorablePositions.PRICE, "null");
+        else
+            store.add(StorablePositions.PRICE, getPrice().toString());
         return String.join(Constants.STORE_SEPARATOR, store);
     }
 
@@ -116,7 +120,10 @@ public class Stock implements Arrayable {
         List<String> store = new ArrayList<>();
         store.add(ShowablePositions.GOOD_DESCRIPTION, getGood().getDescription());
         store.add(ShowablePositions.AMOUNT, getAmount().toString());
-        store.add(ShowablePositions.PRICE, getPrice().toString());
+        if (getPrice() == null)
+            store.add(ShowablePositions.PRICE, "null");
+        else
+            store.add(ShowablePositions.PRICE, getPrice().toString());
         return store.toArray(new String[store.size()]);
     }
 }

@@ -4,6 +4,7 @@ import database.Database;
 import database.TextFileCommaSeparatedDatabase;
 import main.Main;
 import models.Customer;
+import models.Good;
 import models.Shop;
 import models.Stock;
 import views.utils.LabelValues;
@@ -27,6 +28,14 @@ public class MenuBar extends JMenuBar {
         addMenu.add(addCustomerMenu);
 
         JMenuItem addGoodMenu = new JMenuItem(LabelValues.ADD_GOOD_MENU_NAME);
+        addGoodMenu.addActionListener(e -> {
+            String name = JOptionPane.showInputDialog(new JFrame(), "Type good name", "");
+            if ((name != null) && (name.length() > 0)) {
+                Stock newStock = new Stock(new Good(name), 0, null);
+                Main.shop.addStock(newStock);
+                Main.mainWindow.addStock(newStock.toStringArray());
+            }
+        });
         addMenu.add(addGoodMenu);
 
         JMenuItem addTradeMenu = new JMenuItem(LabelValues.ADD_TRADE_MENU_NAME);
@@ -37,7 +46,8 @@ public class MenuBar extends JMenuBar {
         JMenu editMenu = new JMenu(LabelValues.EDIT_MENU_NAME);
 
         JMenuItem addGoodAmountMenu = new JMenuItem(LabelValues.ADD_GOOD_AMOUNT_MENU_NAME);
-        addGoodAmountMenu.addActionListener(e -> new ChangeStockFieldPanel(LabelValues.ADD_GOOD_AMOUNT_MENU_NAME, "Type additional amount") {
+        addGoodAmountMenu.addActionListener(
+                e -> new ChangeStockFieldPanel(LabelValues.ADD_GOOD_AMOUNT_MENU_NAME, "Type additional amount") {
             @Override
             public void makeAction() {
                 ((Stock)getStocksComboBox().getSelectedItem()).addAmount(Integer.valueOf(getValueTextField().getText()));
@@ -46,7 +56,8 @@ public class MenuBar extends JMenuBar {
         editMenu.add(addGoodAmountMenu);
 
         JMenuItem editGoodAmountMenu = new JMenuItem(LabelValues.EDIT_GOOD_AMOUNT_MENU_NAME);
-        editGoodAmountMenu.addActionListener(e -> new ChangeStockFieldPanel(LabelValues.EDIT_GOOD_AMOUNT_MENU_NAME, "Type new amount") {
+        editGoodAmountMenu.addActionListener(
+                e -> new ChangeStockFieldPanel(LabelValues.EDIT_GOOD_AMOUNT_MENU_NAME, "Type new amount") {
             @Override
             public void makeAction() {
                 ((Stock)getStocksComboBox().getSelectedItem()).setAmount(Integer.valueOf(getValueTextField().getText()));
@@ -55,7 +66,8 @@ public class MenuBar extends JMenuBar {
         editMenu.add(editGoodAmountMenu);
 
         JMenuItem editGoodPriceMenu = new JMenuItem(LabelValues.EDIT_GOOD_PRICE_MENU_NAME);
-        editGoodPriceMenu.addActionListener(e -> new ChangeStockFieldPanel(LabelValues.EDIT_GOOD_PRICE_MENU_NAME, "Type new price") {
+        editGoodPriceMenu.addActionListener(
+                e -> new ChangeStockFieldPanel(LabelValues.EDIT_GOOD_PRICE_MENU_NAME, "Type new price") {
             @Override
             public void makeAction() {
                 ((Stock)getStocksComboBox().getSelectedItem()).setPrice(Double.valueOf(getValueTextField().getText()));

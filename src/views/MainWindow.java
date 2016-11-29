@@ -40,11 +40,11 @@ public class MainWindow extends JFrame {
     }
 
     public void addStock(String stockData[]) {
-        customersNamedScrollTable.addRow(stockData);
+        stocksNamedScrollTable.addRow(stockData);
     }
 
     public void addTrade(String tradeData[]) {
-        customersNamedScrollTable.addRow(tradeData);
+        tradesNamedScrollTable.addRow(tradeData);
     }
 
     public void loadCustomersData(String customersData[][]) {
