@@ -14,7 +14,7 @@ public abstract class Storable {
     }
 
     public final String getClassSimpleName() {
-        return this.getClass().getSimpleName();
+        return getClass().getSimpleName();
     }
 
     @Override
@@ -26,6 +26,6 @@ public abstract class Storable {
     }
 
     public String toStorableString() {
-        return getClassSimpleName() + Constants.STORE_SEPARATOR + getId();
+        return getClass().getName() + Constants.STORE_SEPARATOR + getId();
     }
 }

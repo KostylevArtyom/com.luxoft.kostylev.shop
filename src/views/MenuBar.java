@@ -5,6 +5,7 @@ import database.TextFileDatabase;
 import exceptions.DatabaseClassIndexAlreadyExistException;
 import main.Main;
 import models.Customer;
+import models.Shop;
 import models.Stock;
 import views.utils.CheckCorrectValueUtils;
 import views.utils.LabelValues;
@@ -84,20 +85,24 @@ public class MenuBar extends JMenuBar {
         JMenu storageMenu = new JMenu(LabelValues.STORAGE_MENU_NAME);
 
         JMenuItem storageLoadMenu = new JMenuItem(LabelValues.STORAGE_LOAD_MENU_NAME);
-//        storageLoadMenu.addActionListener(e -> {
-//            final JFileChooser jFileChooser = new JFileChooser();
-//            int result = jFileChooser.showOpenDialog(null);
-//            if (result == JFileChooser.APPROVE_OPTION) {
-//                Path path = jFileChooser.getSelectedFile().toPath();
-//                Database database = new TextFileDatabase(path);
-//                Main.shop = new Shop(database.readRowList());
-//
-//                Main.mainWindow.loadData(
-//                        Main.shop.getCustomersStringArray(),
-//                        Main.shop.getStocksStringArray(),
-//                        Main.shop.getTradesStringArray());
-//            }
-//        });
+        storageLoadMenu.addActionListener(e -> {
+            final JFileChooser jFileChooser = new JFileChooser();
+            int result = jFileChooser.showOpenDialog(null);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                Path path = jFileChooser.getSelectedFile().toPath();
+                Database database = new TextFileDatabase(path);
+                try {
+                    Main.shop = new Shop(database.readAllObjects());
+                } catch (DatabaseClassIndexAlreadyExistException e1) {
+                    e1.printStackTrace();
+                }
+
+                Main.mainWindow.loadData(
+                        Main.shop.getCustomersStringArray(),
+                        Main.shop.getStocksStringArray(),
+                        Main.shop.getTradesStringArray());
+            }
+        });
         storageMenu.add(storageLoadMenu);
 
         JMenuItem storageSaveMenu = new JMenuItem(LabelValues.STORAGE_SAVE_MENU_NAME);

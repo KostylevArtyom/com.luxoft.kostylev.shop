@@ -38,7 +38,7 @@ public class Good extends Storable {
         return super.toString() + String.join(Constants.SHOW_ITEMS_SEPARATOR, store);
     }
 
-    private class StorablePositions {
+    private static class StorablePositions {
         static final int ID = 0;
         static final int DESCRIPTION = 1;
     }

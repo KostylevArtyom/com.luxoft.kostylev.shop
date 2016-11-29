@@ -38,7 +38,7 @@ public class Customer extends Storable implements Arrayable {
         return super.toString() + String.join(Constants.SHOW_ITEMS_SEPARATOR, store);
     }
 
-    private class StorablePositions {
+    private static class StorablePositions {
         static final int ID = 0;
         static final int NAME = 1;
     }
@@ -48,6 +48,10 @@ public class Customer extends Storable implements Arrayable {
         store.add(StorablePositions.ID, super.toStorableString());
         store.add(StorablePositions.NAME, getName());
         return String.join(Constants.STORE_SEPARATOR, store);
+    }
+
+    public Customer(String[] dataArray) {
+        this(dataArray[StorablePositions.NAME], Integer.valueOf(dataArray[StorablePositions.ID]));
     }
 
     public String getName() {
@@ -74,12 +78,12 @@ public class Customer extends Storable implements Arrayable {
         return super.getId();
     }
 
-    private class ShowablePositions {
+    private static class ShowablePositions {
         static final int ID = 0;
         static final int NAME = 1;
     }
 
-    private class ShowableNames {
+    private static class ShowableNames {
         static final String ID = "ID";
         static final String NAME = "Name";
     }

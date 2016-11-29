@@ -5,7 +5,6 @@ import database.InMemoryArrayListDatabase;
 import database.Storable;
 import exceptions.*;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,6 +14,11 @@ public class Shop {
 
     public Shop() {
         database = new InMemoryArrayListDatabase();
+    }
+
+    public Shop(List<Storable> storables) throws DatabaseClassIndexAlreadyExistException {
+        this.database = new InMemoryArrayListDatabase();
+        this.database.writeObjects(storables);
     }
 
     public Object getStorableById(Class storable, Integer id) throws DatabaseClassIndexNotExistException {

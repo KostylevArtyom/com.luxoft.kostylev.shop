@@ -32,7 +32,7 @@ public class Stock extends Storable implements Arrayable {
         initializeFields(good, amount, price);
     }
 
-    private class ToStringPositions {
+    private static class ToStringPositions {
         static final int GOOD = 0;
         static final int AMOUNT = 1;
         static final int PRICE = 2;
@@ -47,7 +47,7 @@ public class Stock extends Storable implements Arrayable {
         return super.toString() + String.join(Constants.SHOW_ITEMS_SEPARATOR, store);
     }
 
-    private class StorablePositions {
+    private static class StorablePositions {
         static final int ID = 0;
         static final int GOOD_ID = 1;
         static final int GOOD_DESCRIPTION = 2;
@@ -63,6 +63,15 @@ public class Stock extends Storable implements Arrayable {
         store.add(StorablePositions.AMOUNT, getAmount().toString());
         store.add(StorablePositions.PRICE, getPrice().toString());
         return String.join(Constants.STORE_SEPARATOR, store);
+    }
+
+    public Stock(String[] dataArray) {
+        this(new Good(
+                        dataArray[StorablePositions.GOOD_DESCRIPTION],
+                        Integer.valueOf(dataArray[StorablePositions.GOOD_ID])
+                ), Integer.valueOf(dataArray[StorablePositions.AMOUNT]),
+                Double.valueOf(dataArray[StorablePositions.PRICE]),
+                Integer.valueOf(dataArray[StorablePositions.ID]));
     }
 
     public Good getGood() {
@@ -114,14 +123,14 @@ public class Stock extends Storable implements Arrayable {
         return super.hashCode();
     }
 
-    private class ShowablePositions {
+    private static class ShowablePositions {
         static final int ID = 0;
         static final int GOOD = 0;
         static final int AMOUNT = 1;
         static final int PRICE = 2;
     }
 
-    private class ShowableNames {
+    private static class ShowableNames {
         static final String ID = "ID";
         static final String GOOD = "Good";
         static final String AMOUNT = "Amount";
