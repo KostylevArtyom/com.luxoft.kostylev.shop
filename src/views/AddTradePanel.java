@@ -38,12 +38,13 @@ public class AddTradePanel extends JPanel {
                     (CheckCorrectValueUtils.checkJComboBoxSelectCorrect(goodsComboBox)) &&
                     amount != null) {
                 Stock stock = Main.shop.getStockByGoodId(((Good) goodsComboBox.getSelectedItem()).getId());
-                Main.shop.addTrade(new Trade(
+                Trade trade = new Trade(
                         (Customer) customersComboBox.getSelectedItem(),
                         stock,
-                        Integer.valueOf(amountTextField.getText())));
-                Main.mainWindow.loadStocksData(Main.shop.getStocksStringArray());
-                Main.mainWindow.loadTradesData(Main.shop.getTradesStringArray());
+                        Integer.valueOf(amountTextField.getText()));
+                Main.shop.addTrade(trade);
+                Main.mainWindow.addTrade(trade.toStringArray());
+                Main.mainWindow.addTrade(trade.toStringArray());
             }
         }
     }
