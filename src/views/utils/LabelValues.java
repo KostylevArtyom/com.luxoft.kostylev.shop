@@ -19,5 +19,5 @@ public final class LabelValues {
 
     public static String STORAGE_MENU_NAME = "Storage";
     public static String STORAGE_LOAD_MENU_NAME = "Load from .txt storage";
-    public static String STORAGE_SAVE_MENU_NAME = "Save from .txt storage";
+    public static String STORAGE_SAVE_MENU_NAME = "Save to .txt storage";
 }

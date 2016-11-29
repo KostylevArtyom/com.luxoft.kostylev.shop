@@ -47,9 +47,21 @@ public class MainWindow extends JFrame {
         customersNamedScrollTable.addRow(tradeData);
     }
 
-    public void loadData(String customersData[][], String stocksData[][], String tradesData[][]) {
+    public void loadCustomersData(String customersData[][]) {
         customersNamedScrollTable.initializeRows(customersData);
+    }
+
+    public void loadStocksData(String stocksData[][]) {
         stocksNamedScrollTable.initializeRows(stocksData);
+    }
+
+    public void loadTradesData(String tradesData[][]) {
         tradesNamedScrollTable.initializeRows(tradesData);
+    }
+
+    public void loadData(String customersData[][], String stocksData[][], String tradesData[][]) {
+        loadCustomersData(customersData);
+        loadStocksData(stocksData);
+        loadTradesData(tradesData);
     }
 }
